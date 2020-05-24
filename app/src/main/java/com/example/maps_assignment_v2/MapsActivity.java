@@ -9,7 +9,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.Locale;
 
 import static com.google.android.gms.maps.GoogleMap.*;
 
@@ -49,5 +52,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+
+
+    ///NEW: LONG CLICK
+mMap.setOnMapLongClickListener(new OnMapLongClickListener() {
+        @Override
+        public void onMapLongClick(LatLng latLng) {
+            String snippet = String.format(Locale.getDefault(),
+                    "Lat: %1$.5f, Long: %2$.5f",
+                    latLng.latitude,
+                    latLng.longitude);
+
+            mMap.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title(getString(R.string.dropped_pin))
+                    .snippet(snippet));
+        }
+    });
+        ///FIM: LONG CLICK
+
+
+        //NEW INFO CLICK
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                openDialog();
+            }
+        });
+
+
+
+
     }
+
+
+    public void openDialog() {
+        MarkerDialog markerDialog = new MarkerDialog();
+        markerDialog.show(getSupportFragmentManager(), "Marker Dialog");
+    }
+    //// fim
 }

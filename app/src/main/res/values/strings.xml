@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Maps_assignment_V2</string>
     <string name="title_activity_maps">Map</string>
+    <string name="dropped_pin">PIN NAME</string>
+
+
 </resources>
